@@ -1,4 +1,7 @@
-﻿  Generating code
-  All 28 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+﻿  AI_Lab3.cpp
+  Generating code
+  4 of 88 functions ( 4.5%) were compiled, the rest were copied from previous compilation.
+    2 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AI_Lab3.vcxproj -> C:\Users\aleks\Documents\Visual Studio 2017\Projects\AI_Lab3\x64\Release\AI_Lab3.exe

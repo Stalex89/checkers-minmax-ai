@@ -1,0 +1,5 @@
+﻿  AI_Lab3.cpp
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  AI_Lab3.vcxproj -> C:\Users\aleks\Documents\Visual Studio 2017\Projects\AI_Lab3\x64\Debug\AI_Lab3.exe
