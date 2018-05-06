@@ -90,10 +90,48 @@ bool Board::isInPlayfield(sf::Vector2f &position)
 		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y);
 }
 
+bool Board::isMoveforOneField(sf::Vector2f &move)
+{
+	return (sqrt(move.x*move.x + move.y*move.y) <= m_pieceSize * 2);
+}
+
+//
+//bool isMovefortwoFields(Vector2f &move)
+//{
+//	return (sqrt(move.x*move.x + move.y*move.y) <= size * 3);
+//}
+
+
+bool Board::isManLegalMove(Piece &piece, sf::Vector2f &move)
+{
+	if(piece.isKing())
+		return ((move.x < 0 && move.y > 0) || (move.x > 0 && move.y > 0) ||
+		(move.x < 0 && move.y < 0) || (move.x > 0 && move.y < 0)); // in any diagonal direction
+	else 
+	{
+		if (piece.getColor() == Piece::Color::BLACK) // if piece is black
+			return ((move.x < 0 && move.y > 0) || (move.x > 0 && move.y > 0)); // if southwest or southeast 
+
+		else if (piece.getColor() == Piece::Color::WHITE) // if piece is white
+			return ((move.x < 0 && move.y < 0) || (move.x > 0 && move.y < 0)); // if northwest or northeast
+	}
+	
+	return false;
+}
+
+
 bool Board::isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n)
 {
-	return true;
+	sf::Vector2f p = newPos - oldPos;
+
+	if (!m_pieces.at(n).isKing())
+		if (isMoveforOneField(p) && isManLegalMove(m_pieces[n], p))
+			return true;
+
+	return false;
 }
+
+
 
 Board::~Board()
 {

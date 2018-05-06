@@ -19,13 +19,17 @@ public:
 	void loadPosition();
 	std::string toChessNote(sf::Vector2f position);
 	sf::Vector2f toCoord(char a, char b);
-	bool isInPlayfield(sf::Vector2f &position);
-	bool isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n);
 	Piece& getPiece(int idx) { return m_pieces.at(idx); }
 	sf::Sprite& getSprite() { return *m_sprite; };
 	int getPieceSize() { return m_pieceSize; }
 	sf::Vector2f getOffset() { return m_offset; }
 	std::string& getPositions() { return m_positions; }
+
+
+	bool isInPlayfield(sf::Vector2f &position);
+	bool isMoveforOneField(sf::Vector2f &move);
+	bool isManLegalMove(Piece &piece, sf::Vector2f &move);
+	bool isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n);
 	
 	~Board();
 };
