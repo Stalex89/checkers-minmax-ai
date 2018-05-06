@@ -1,0 +1,32 @@
+#pragma once
+#include "stdafx.h"
+#include "Piece.h"
+
+class Board
+{
+
+	std::array<std::array<sf::Vector2f,8>,8> m_board;
+	sf::Texture *m_texture;
+	sf::Sprite *m_sprite;
+	int m_pieceSize = 56;
+	std::string m_positions = "";
+	std::array<Piece, 24> m_pieces;
+	sf::Vector2f m_offset = sf::Vector2f(28,28);
+
+public:
+	Board();
+	void init();
+	void loadPosition();
+	std::string toChessNote(sf::Vector2f position);
+	sf::Vector2f toCoord(char a, char b);
+	bool isInPlayfield(sf::Vector2f &position);
+	bool isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n);
+	Piece& getPiece(int idx) { return m_pieces.at(idx); }
+	sf::Sprite& getSprite() { return *m_sprite; };
+	int getPieceSize() { return m_pieceSize; }
+	sf::Vector2f getOffset() { return m_offset; }
+	std::string& getPositions() { return m_positions; }
+	
+	~Board();
+};
+
