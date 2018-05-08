@@ -1,2 +1,10 @@
-﻿  AI_Lab3.cpp
+﻿  Board.cpp
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(153): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(158): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(159): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(165): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(166): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(167): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(168): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   AI_Lab3.vcxproj -> C:\Users\aleks\Documents\Visual Studio 2017\Projects\AI_Lab3\x64\Debug\AI_Lab3.exe

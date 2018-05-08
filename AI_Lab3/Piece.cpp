@@ -44,7 +44,13 @@ void Piece::unpromote()
 		m_sprite->setTextureRect(sf::IntRect(m_size, 0, m_size, m_size)); // romote bo white king
 }
 
-
+void Piece::printPossibleMoves()
+{
+	std::cout << "Possible moves: ";
+	for (int i = 0; i < m_possibleMoves.size(); i++)
+		std::cout << m_possibleMoves.at(i).second << ", ";
+	std::cout << '\n';
+}
 
 Piece::~Piece()
 {

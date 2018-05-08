@@ -25,6 +25,7 @@ public:
 	sf::Vector2f getOffset() { return m_offset; }
 	std::string& getPositions() { return m_positions; }
 
+	void calculatePossibleMoves(Piece &piece);
 
 	bool isInPlayfield(sf::Vector2f &position);
 	bool isMoveforOneField(sf::Vector2f &move);
