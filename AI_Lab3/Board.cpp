@@ -86,8 +86,8 @@ sf::Vector2f Board::toCoord(char a, char b)
 // Is new position of piece out of play field?
 bool Board::isInPlayfield(sf::Vector2f &position)
 {
-	return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x
-		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y);
+	return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
+		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
 }
 
 bool Board::isMoveforOneField(sf::Vector2f &move)
@@ -187,39 +187,6 @@ void Board::calculatePossibleMoves(Piece &piece)
 			piece.addPossibleMove(std::make_pair(1, legalMoves.substr(i,4)));
 		}
 	}
-
-
-
-
-
-
-
-
-	//if (!piece.isKing())
-	//{
-	//	if (piece.getColor() == Piece::Color::BLACK)
-	//	{
-
-	//		/*legalMoves.push_back(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
-	//		legalMoves.push_back(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));*/
-	//	
-	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
-	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));
-	//	}
-	//	else // piece is White
-	//	{
-	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize))));
-	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize))));
-
-	//	}
-	//}
-	//else 
-	//{
-	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
-	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));
-	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize))));
-	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize))));
-	//}
 }
 
 
