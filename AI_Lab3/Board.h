@@ -30,7 +30,12 @@ public:
 	bool isInPlayfield(sf::Vector2f &position);
 	bool isMoveforOneField(sf::Vector2f &move);
 	bool isManLegalMove(Piece &piece, sf::Vector2f &move);
-	bool isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n);
+	//bool isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n);
+
+
+
+	std::string getLegalMoves(Piece &piece);
+	bool isFreeField(std::string field);
 	
 	~Board();
 };

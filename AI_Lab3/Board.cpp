@@ -120,16 +120,16 @@ bool Board::isManLegalMove(Piece &piece, sf::Vector2f &move)
 }
 
 
-bool Board::isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n)
-{
-	sf::Vector2f p = newPos - oldPos;
-
-	if (!m_pieces.at(n).isKing())
-		if (isMoveforOneField(p) && isManLegalMove(m_pieces[n], p))
-			return true;
-
-	return false;
-}
+//bool Board::isLegalMove(sf::Vector2f &oldPos, sf::Vector2f &newPos, int n)
+//{
+//	sf::Vector2f p = newPos - oldPos;
+//
+//	if (!m_pieces.at(n).isKing())
+//		if (isMoveforOneField(p) && isManLegalMove(m_pieces[n], p))
+//			return true;
+//
+//	return false;
+//}
 
 
 Board::~Board()
@@ -138,33 +138,88 @@ Board::~Board()
 	m_sprite = nullptr;
 }
 
-void Board::calculatePossibleMoves(Piece &piece)
+std::string Board::getLegalMoves(Piece &piece)
 {
-	//std::vector<std::pair<int, std::string>> legalMoves;
-
+	std::string moves = "";
 	if (!piece.isKing())
 	{
 		if (piece.getColor() == Piece::Color::BLACK)
 		{
-
-			/*legalMoves.push_back(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
-			legalMoves.push_back(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));*/
-		
-			piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
-			piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));
+			moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize)) + " ";
+			moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize)) + " ";
 		}
 		else // piece is White
 		{
-			piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize))));
-			piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize))));
+			moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize)) + " ";
+			moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize)) + " ";
 
 		}
 	}
-	else 
+	else
 	{
-		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
-		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));
-		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize))));
-		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize))));
+		moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize)) + " ";
+		moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize)) + " ";		
+		moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize)) + " ";
+		moves += toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize)) + " ";
 	}
+
+	return moves;
 }
+
+bool Board::isFreeField(std::string field)
+{
+	for (int i = 0; i < m_pieces.size(); i++)
+	{
+		if (m_pieces[i].getPosition() == toCoord(field[0], field[1]))
+			return false;
+	}
+	return true;
+}
+
+void Board::calculatePossibleMoves(Piece &piece)
+{
+	std::string legalMoves = getLegalMoves(piece);
+
+	for (int i = 0; i < legalMoves.length(); i += 5)
+	{
+		if (isFreeField(legalMoves.substr(i+2, 2)))
+		{
+			piece.addPossibleMove(std::make_pair(1, legalMoves.substr(i,4)));
+		}
+	}
+
+
+
+
+
+
+
+
+	//if (!piece.isKing())
+	//{
+	//	if (piece.getColor() == Piece::Color::BLACK)
+	//	{
+
+	//		/*legalMoves.push_back(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
+	//		legalMoves.push_back(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));*/
+	//	
+	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
+	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));
+	//	}
+	//	else // piece is White
+	//	{
+	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize))));
+	//		piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize))));
+
+	//	}
+	//}
+	//else 
+	//{
+	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, m_pieceSize))));
+	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, m_pieceSize))));
+	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(-m_pieceSize, -m_pieceSize))));
+	//	piece.addPossibleMove(std::make_pair(1, toChessNote(piece.getPosition()) + toChessNote(piece.getPosition() + sf::Vector2f(m_pieceSize, -m_pieceSize))));
+	//}
+}
+
+
