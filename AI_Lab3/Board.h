@@ -36,7 +36,7 @@ public:
 
 	std::string getLegalMoves(Piece &piece);
 	bool isFreeField(std::string field);
-	
+	bool isInPlayfield(std::string field);
 	~Board();
 };
 

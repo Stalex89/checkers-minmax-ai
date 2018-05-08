@@ -90,6 +90,8 @@ bool Board::isInPlayfield(sf::Vector2f &position)
 		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
 }
 
+
+
 bool Board::isMoveforOneField(sf::Vector2f &move)
 {
 	return (sqrt(move.x*move.x + move.y*move.y) <= m_pieceSize * 2);
@@ -182,11 +184,19 @@ void Board::calculatePossibleMoves(Piece &piece)
 
 	for (int i = 0; i < legalMoves.length(); i += 5)
 	{
-		if (isFreeField(legalMoves.substr(i+2, 2)))
+		std::string field = legalMoves.substr(i + 2, 2);
+		if (isFreeField(field) && isInPlayfield(field))
 		{
 			piece.addPossibleMove(std::make_pair(1, legalMoves.substr(i,4)));
 		}
 	}
+}
+
+bool Board::isInPlayfield(std::string field)
+{
+	sf::Vector2f position = toCoord(field[0], field[1]);
+	return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
+		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
 }
 
 
