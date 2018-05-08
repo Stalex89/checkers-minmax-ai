@@ -13,7 +13,6 @@ Piece::Piece(Color color, sf::IntRect rect, sf::Vector2f position)
 	m_sprite->setTexture(*m_texture);
 	m_sprite->setTextureRect(rect);
 	m_sprite->setPosition(m_position);
-	m_possibleMoves = new std::vector<sf::Vector2f>();
 }
 
 // Move the piece to newPos
