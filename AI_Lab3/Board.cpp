@@ -67,16 +67,16 @@ void Board::loadPosition()
 			m_pieces.push_back(Piece(color, rect, position));
 		}
 
-	for (int i = 0; i < m_positions.length(); i += 5)
-	{
-		std::string substr = m_positions.substr(i, 4);
-		sf::Vector2f oldPos = toCoord(substr[0], substr[1]);
-		sf::Vector2f newPos = toCoord(substr[2], substr[3]);
-		std::for_each(m_pieces.begin(), m_pieces.end(), [&oldPos, &newPos](Piece &p)
-		{ if (p.getPosition() == oldPos)
-			p.move(newPos); 
-		});
-	}
+	//for (int i = 0; i < m_positions.length(); i += 5)
+	//{
+	//	std::string substr = m_positions.substr(i, 4);
+	//	sf::Vector2f oldPos = toCoord(substr[0], substr[1]);
+	//	sf::Vector2f newPos = toCoord(substr[2], substr[3]);
+	//	std::for_each(m_pieces.begin(), m_pieces.end(), [&oldPos, &newPos](Piece &p)
+	//	{ if (p.getPosition() == oldPos)
+	//		p.move(newPos); 
+	//	});
+	//}
 
 }
 
@@ -292,4 +292,10 @@ bool Board::isAttackPossible(sf::Vector2f position, Piece &enemyPiece)
 	
 	// return if there is no piece on that position and it is in playfield
 	return(getPieceIdxOnPosition(newPos) == -1 && isInPlayfield(newPos)); 
+}
+
+bool Board::isMoveforOneField(sf::Vector2f oldPos, sf::Vector2f newPos)
+{
+	sf::Vector2f move = newPos - oldPos;
+	return sqrt((move.x * move.x) + (move.y * move.y)) <= 2 * m_pieceSize;
 }

@@ -22,7 +22,8 @@ void Piece::move(sf::Vector2f newPos)
 	m_sprite->setPosition(newPos);
 }
 
-void Piece::attack(sf::Vector2f newPos, Piece &attackedPiece)
+
+void Piece::attack(sf::Vector2f newPos, Piece attackedPiece)
 {
 	move(newPos);
 	attackedPiece.move(sf::Vector2f(-100.0f, -100.0f));
@@ -61,6 +62,8 @@ void Piece::printPossibleMoves()
 //	return false;
 //	
 //}
+
+
 
 int Piece::getPossibleMoveIdx(std::string &move)
 {
