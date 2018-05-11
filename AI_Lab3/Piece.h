@@ -33,11 +33,13 @@ public:
 	void promote();
 	void unpromote();
 	bool hasPossibleMoves() { return !m_possibleMoves.empty(); }
+	//bool possibleMovesContains(std::string &move);
 	//void addPossibleMoves(sf::Vector2f move) { m_possibleMoves.push_back(move); }
 	void addPossibleMove(std::pair<int, std::string> move) { m_possibleMoves.push_back(move); }
 	void printPossibleMoves();
 	void clearPossibleMoves() { m_possibleMoves.clear(); }
-	
+	int getPossibleMoveIdx(std::string &move);
+	std::pair<int, std::string> getPossibleMove(int idx);
 	sf::Sprite& getSprite() { return *m_sprite; }
 	int getSize() { return m_size; }
 	Color getColor() { return m_color; }

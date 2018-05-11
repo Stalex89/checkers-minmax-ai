@@ -46,10 +46,34 @@ void Piece::unpromote()
 
 void Piece::printPossibleMoves()
 {
-	std::cout << "Possible moves: ";
+	std::cout << "Possible moves:\n";
 	for (int i = 0; i < m_possibleMoves.size(); i++)
-		std::cout << m_possibleMoves.at(i).second << ", ";
+		std::cout << "<" << m_possibleMoves.at(i).first << ", " << m_possibleMoves.at(i).second << ">, ";
 	std::cout << '\n';
+}
+
+//bool Piece::possibleMovesContains(std::string &move)
+//{
+//	for (int i = 0; i < m_possibleMoves.size(); i++)
+//		if (m_possibleMoves.at(i).second.find(move) != std::string::npos)
+//			return true;
+//
+//	return false;
+//	
+//}
+
+int Piece::getPossibleMoveIdx(std::string &move)
+{
+	for (int i = 0; i < m_possibleMoves.size(); i++)
+		if (m_possibleMoves.at(i).second.find(move) != std::string::npos)
+			return i;
+	
+	return -1;
+}
+
+std::pair<int, std::string> Piece::getPossibleMove(int idx)
+{
+	return m_possibleMoves.at(idx);
 }
 
 Piece::~Piece()
