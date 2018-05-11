@@ -29,7 +29,7 @@ public:
 	Piece(Color color, sf::IntRect rect, sf::Vector2f position);
 
 	void move(sf::Vector2f newPos);
-	void attack(sf::Vector2f newPos, Piece attackedPiece);
+	void attack(sf::Vector2f newPos, Piece &attackedPiece);
 	void promote();
 	void unpromote();
 	bool hasPossibleMoves() { return !m_possibleMoves.empty(); }

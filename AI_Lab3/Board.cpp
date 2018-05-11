@@ -299,3 +299,8 @@ bool Board::isMoveforOneField(sf::Vector2f oldPos, sf::Vector2f newPos)
 	sf::Vector2f move = newPos - oldPos;
 	return sqrt((move.x * move.x) + (move.y * move.y)) <= 2 * m_pieceSize;
 }
+
+//void Board::removePieceByIdx(int idx)
+//{
+//	m_pieces.erase(m_pieces.begin() + idx);
+//}
