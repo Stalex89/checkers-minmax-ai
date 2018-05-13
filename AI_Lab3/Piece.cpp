@@ -33,17 +33,29 @@ void Piece::attack(sf::Vector2f newPos, Piece &attackedPiece)
 void Piece::promote()
 {
 	if (m_sprite->getTextureRect() == sf::IntRect(0, 0, m_size, m_size)) // if is black man
+	{
 		m_sprite->setTextureRect(sf::IntRect(0, m_size, m_size, m_size)); // promote to black king
+		m_isKing = true;
+	}
 	else if (m_sprite->getTextureRect() == sf::IntRect(m_size, 0, m_size, m_size)) // if is white man
+	{
 		m_sprite->setTextureRect(sf::IntRect(m_size, m_size, m_size, m_size)); // romote bo white king
+		m_isKing = true;
+	}
 }
 
 void Piece::unpromote()
 {
 	if (m_sprite->getTextureRect() == sf::IntRect(0, m_size, m_size, m_size)) // if is black king
+	{
 		m_sprite->setTextureRect(sf::IntRect(0, 0, m_size, m_size)); // unpromote to black man
+		m_isKing = false;
+	}
 	else if (m_sprite->getTextureRect() == sf::IntRect(m_size, m_size, m_size, m_size)) // if is white king
+	{
 		m_sprite->setTextureRect(sf::IntRect(m_size, 0, m_size, m_size)); // romote bo white king
+		m_isKing = false;
+	}
 }
 
 void Piece::printPossibleMoves()

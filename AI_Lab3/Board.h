@@ -34,13 +34,18 @@ public:
 	bool isMoveforOneField(sf::Vector2f oldPos, sf::Vector2f newPos);
 	bool isInPlayfield(sf::Vector2f position);
 	bool isAttackPossible(sf::Vector2f position, Piece &enemyPiece);
+	bool isInAttackChain(sf::Vector2f position, std::pair<int, std::string> attackChain);
 	void AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair<int, std::string> attackChain);
 	std::string getLegalMoves(Piece &piece, sf::Vector2f position);
+
+
 
 	sf::Sprite& getSprite() { return *m_sprite; };
 	int getPieceSize() { return m_pieceSize; }
 	sf::Vector2f getOffset() { return m_offset; }
 	
+	bool isGameOver(Piece::Color color);
+
 	~Board();
 };
 

@@ -26,16 +26,28 @@ void Board::loadPosition()
 	//	1,  0,  1,  0,  1,  0,  1,  0,
 	//};
 
+	//int board[8][8] =
+	//{
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, -1, 0, -1, 0, 0, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, -1, 0, -1, 0, 0,
+	//	0, 0, 0, 0, 1, 0, 0, 0,
+	//};
+
 	int board[8][8] =
 	{
 		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, -1, 0, -1, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, -1, 0, -1, 0, 0,
-		0, 0, 0, 0, 1, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
 	};
 
 	// clear pieces array
@@ -71,7 +83,14 @@ void Board::loadPosition()
 			sf::Vector2f newPos = toCoord(moves[j+2], moves[j+3]);
 		
 			if (isMoveforOneField(oldPos, newPos))
+			{
 				m_pieces.at(getPieceIdxOnPosition(oldPos)).move(newPos);
+				if (m_pieces.at(getPieceIdxOnPosition(newPos)).getPosition().y == m_offset.y && !m_pieces.at(getPieceIdxOnPosition(newPos)).isKing())
+				{
+					//std::cout << "Promoted to king " << std::endl;
+					m_pieces.at(getPieceIdxOnPosition(newPos)).promote();
+				}
+			}
 			else
 			{
 				sf::Vector2f attackPos = sf::Vector2f((newPos.x + oldPos.x) / 2, (newPos.y + oldPos.y) / 2);
@@ -248,7 +267,7 @@ void Board::AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair
 			// if there is a piece found on that position and it is enemy piece
 			if (k != -1)
 				if(m_pieces[k].getColor() != piece.getColor())
-					if (isAttackPossible(position, m_pieces[k])) // if we can attack enemy piece
+					if (isAttackPossible(position, m_pieces[k]) && !isInAttackChain(m_pieces[k].getPosition(), attackChain)) // if we can attack enemy piece
 					{						
 						// get new position of piece
 						sf::Vector2f newPosition = m_pieces[k].getPosition() + (m_pieces[k].getPosition() - position);
@@ -258,6 +277,21 @@ void Board::AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair
 		}
 	}
 }
+
+bool Board::isInAttackChain(sf::Vector2f position, std::pair<int, std::string> attackChain)
+{
+	std::string chain = attackChain.second;
+	for (int i = 0; i < chain.length(); i += 5)
+	{
+		sf::Vector2f attackPos = sf::Vector2f((toCoord(chain[i], chain[i + 1]).x + toCoord(chain[i + 2], chain[i + 3]).x) / 2,
+			(toCoord(chain[i], chain[i + 1]).y + toCoord(chain[i + 2], chain[i + 3]).y) / 2);
+		if (attackPos == position)
+			return true;
+	}
+
+	return false;
+}
+
 
 //bool Board::isInPlayfield(std::string field)
 //{
@@ -332,4 +366,23 @@ void Board::printPositions()
 	std::cout << "Positions: ";
 	std::for_each(m_positions.begin(), m_positions.end(), [](auto move) { std::cout << "<" << move.first << ", " << move.second << ">, ";});
 	std::cout << '\n';
+}
+
+bool Board::isGameOver(Piece::Color color)
+{
+	// Game ends if
+	// 1) no enemy pieces left on board
+	// 2) all enemy pieces are locked
+
+	//std::vector<Piece> leftPieces;
+	
+	for (int i = 0; i < m_pieces.size(); i++)
+	{
+		Piece p = m_pieces.at(i);
+		if (p.getColor() == color) // if the piece is that color
+			if (m_pieces.at(i).getPosition() != sf::Vector2f(-100.0f, -100.0f)) // if it is not outside of the field (taken) 
+				if (m_pieces.at(i).hasPossibleMoves()) // if it is not locked
+					return false;
+	}
+	return true;
 }
