@@ -54,17 +54,6 @@ void Piece::printPossibleMoves()
 	std::cout << '\n';
 }
 
-//bool Piece::possibleMovesContains(std::string &move)
-//{
-//	for (int i = 0; i < m_possibleMoves.size(); i++)
-//		if (m_possibleMoves.at(i).second.find(move) != std::string::npos)
-//			return true;
-//
-//	return false;
-//	
-//}
-
-
 
 int Piece::getPossibleMoveIdx(std::string &move)
 {

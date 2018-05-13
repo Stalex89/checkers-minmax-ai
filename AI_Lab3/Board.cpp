@@ -9,16 +9,8 @@ Board::Board()
 	m_texture->loadFromFile("../images/board.png");
 	m_sprite = new sf::Sprite();
 	m_sprite->setTexture(*m_texture);
-	//init();
+
 }
-
-
-//void Board::init()
-//{
-//	for(int i = 0; i < 8; i++)
-//		for(int j = 0; j < 8; j++)
-//			m_board.at(i).at(j) = sf::Vector2f(float(i * m_pieceSize), float(j * m_pieceSize)) + m_offset;
-//}
 
 void Board::loadPosition()
 {
@@ -83,7 +75,7 @@ void Board::loadPosition()
 			else
 			{
 				sf::Vector2f attackPos = sf::Vector2f((newPos.x + oldPos.x) / 2, (newPos.y + oldPos.y) / 2);
-				m_pieces.at(getPieceIdxOnPosition(oldPos)).attack(newPos, m_pieces.at(getPieceIdxOnPosition(oldPos)));		
+				m_pieces.at(getPieceIdxOnPosition(oldPos)).attack(newPos, m_pieces.at(getPieceIdxOnPosition(attackPos)));		
 			}
 			
 		}
