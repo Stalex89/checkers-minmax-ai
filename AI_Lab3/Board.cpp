@@ -46,7 +46,8 @@ void Board::loadPosition()
 		0, 0, 0, 0, 1, 0, 0, 0,
 	};
 
-
+	// clear pieces array
+	m_pieces.clear();
 
 	//int k = 0;
 	for (int i = 0; i < 8; i++)
@@ -67,17 +68,26 @@ void Board::loadPosition()
 			m_pieces.push_back(Piece(color, rect, position));
 		}
 
-	//for (int i = 0; i < m_positions.length(); i += 5)
-	//{
-	//	std::string substr = m_positions.substr(i, 4);
-	//	sf::Vector2f oldPos = toCoord(substr[0], substr[1]);
-	//	sf::Vector2f newPos = toCoord(substr[2], substr[3]);
-	//	std::for_each(m_pieces.begin(), m_pieces.end(), [&oldPos, &newPos](Piece &p)
-	//	{ if (p.getPosition() == oldPos)
-	//		p.move(newPos); 
-	//	});
-	//}
 
+	// do all movements
+	for (int i = 0; i < m_positions.size(); i ++)
+	{
+		std::string moves = m_positions.at(i).second;
+		for (int j = 0; j < moves.length(); j += 5)
+		{
+			sf::Vector2f oldPos = toCoord(moves[j], moves[j + 1]);
+			sf::Vector2f newPos = toCoord(moves[j+2], moves[j+3]);
+		
+			if (isMoveforOneField(oldPos, newPos))
+				m_pieces.at(getPieceIdxOnPosition(oldPos)).move(newPos);
+			else
+			{
+				sf::Vector2f attackPos = sf::Vector2f((newPos.x + oldPos.x) / 2, (newPos.y + oldPos.y) / 2);
+				m_pieces.at(getPieceIdxOnPosition(oldPos)).attack(newPos, m_pieces.at(getPieceIdxOnPosition(oldPos)));		
+			}
+			
+		}
+	}
 }
 
 // transform vector coordinates to chess notation
@@ -202,7 +212,8 @@ void Board::calculatePossibleMoves(Piece &piece)
 
 	for (int i = 0; i < legalMoves.length(); i += 5) //iterate over all legal moves
 	{
-		std::string legalPosition = legalMoves.substr(i + 2, 2); // get position after move
+		//std::string legalPosition = legalMoves.substr(i + 2, 2); // get position after move
+		sf::Vector2f legalPosition = toCoord(legalMoves[i+2], legalMoves[i+3]);
 		if (isInPlayfield(legalPosition)) // if position is is play field
 		{
 			int k = getPieceIdxOnPosition(legalPosition); // check if there is a piece on that position
@@ -237,7 +248,8 @@ void Board::AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair
 	std::string legalMoves = getLegalMoves(piece, position); // get all legal moves for piece
 	for (int i = 0; i < legalMoves.length(); i += 5) //iterate over all legal moves
 	{
-		std::string legalPosition = legalMoves.substr(i + 2, 2); // get position after move
+		//std::string legalPosition = legalMoves.substr(i + 2, 2); // get position after move
+		sf::Vector2f legalPosition = toCoord(legalMoves[i + 2], legalMoves[i + 3]);
 		if (isInPlayfield(legalPosition)) // if position is is play field
 		{
 			int k = getPieceIdxOnPosition(legalPosition); // check if there is a piece on that position
@@ -255,20 +267,36 @@ void Board::AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair
 	}
 }
 
-bool Board::isInPlayfield(std::string field)
+//bool Board::isInPlayfield(std::string field)
+//{
+//	sf::Vector2f vectorPos = toCoord(field[0], field[1]);
+//	return (vectorPos.x >= m_offset.x && vectorPos.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
+//		&& vectorPos.y >= m_offset.y && vectorPos.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
+//}
+
+bool Board::isInPlayfield(sf::Vector2f position)
 {
-	sf::Vector2f vectorPos = toCoord(field[0], field[1]);
-	return (vectorPos.x >= m_offset.x && vectorPos.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
-		&& vectorPos.y >= m_offset.y && vectorPos.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
+	return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
+		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
 }
 
 // returns index of piece found on field coordinates
-int Board::getPieceIdxOnPosition(std::string field)
+//int Board::getPieceIdxOnPosition(std::string field)
+//{
+//	sf::Vector2f vectorPos = toCoord(field[0], field[1]);
+//	for (int i = 0; i < m_pieces.size(); i++)
+//	{
+//		if (m_pieces[i].getPosition() == vectorPos)
+//			return i;
+//	}
+//	return -1;
+//}
+
+int Board::getPieceIdxOnPosition(sf::Vector2f position)
 {
-	sf::Vector2f vectorPos = toCoord(field[0], field[1]);
 	for (int i = 0; i < m_pieces.size(); i++)
 	{
-		if (m_pieces[i].getPosition() == vectorPos)
+		if (m_pieces[i].getPosition() == position)
 			return i;
 	}
 	return -1;
@@ -288,8 +316,10 @@ bool Board::isAttackPossible(sf::Vector2f position, Piece &enemyPiece)
 {
 	
 	// get the position after jumping over enemy piece
-	std::string newPos = toChessNote(enemyPiece.getPosition() + (enemyPiece.getPosition() - position));
-	
+	//std::string newPos = toChessNote(enemyPiece.getPosition() + (enemyPiece.getPosition() - position));
+	sf::Vector2f newPos = enemyPiece.getPosition() + (enemyPiece.getPosition() - position);
+
+
 	// return if there is no piece on that position and it is in playfield
 	return(getPieceIdxOnPosition(newPos) == -1 && isInPlayfield(newPos)); 
 }
@@ -304,3 +334,10 @@ bool Board::isMoveforOneField(sf::Vector2f oldPos, sf::Vector2f newPos)
 //{
 //	m_pieces.erase(m_pieces.begin() + idx);
 //}
+
+void Board::printPositions()
+{
+	std::cout << "Positions: ";
+	std::for_each(m_positions.begin(), m_positions.end(), [](auto move) { std::cout << "<" << move.first << ", " << move.second << ">, ";});
+	std::cout << '\n';
+}

@@ -9,7 +9,7 @@ class Board
 	sf::Texture *m_texture;
 	sf::Sprite *m_sprite;
 	int m_pieceSize = 56;
-	std::string m_positions = "";
+	std::vector<std::pair<int, std::string>> m_positions;
 	std::vector<Piece> m_pieces;
 	sf::Vector2f m_offset = sf::Vector2f(28,28);
 
@@ -21,12 +21,17 @@ public:
 	sf::Vector2f toCoord(char a, char b);
 	int getPiecesNum() { return m_pieces.size(); }
 	Piece& getPieceByIdx(int idx) { return m_pieces.at(idx); }
-	int getPieceIdxOnPosition(std::string position);
+	/*int getPieceIdxOnPosition(std::string position);*/
+	int getPieceIdxOnPosition(sf::Vector2f position);
 	sf::Sprite& getSprite() { return *m_sprite; };
 	int getPieceSize() { return m_pieceSize; }
 	sf::Vector2f getOffset() { return m_offset; }
-	std::string& getPositions() { return m_positions; }
+	//std::string& getPositions() { return m_positions; }
+	void addPosition(std::pair<int, std::string> position) { m_positions.push_back(position); }
+	void deleteLastPosition() { m_positions.pop_back(); }
 	void calculatePossibleMoves(Piece &piece);
+	void printPositions();
+	int getPositionsSize() { return m_positions.size(); }
 	//void removePieceByIdx(int idx);
 	//bool isInPlayfield(sf::Vector2f &position);
 	bool isMoveforOneField(sf::Vector2f oldPos, sf::Vector2f newPos);
@@ -38,7 +43,8 @@ public:
 	void AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair<int, std::string> attackChain);
 	std::string getLegalMoves(Piece &piece, sf::Vector2f position);
 	//bool isFreePosition(std::string position);
-	bool isInPlayfield(std::string position);
+	//bool isInPlayfield(std::string position);
+	bool isInPlayfield(sf::Vector2f position);
 	bool isAttackPossible(sf::Vector2f position, Piece &enemyPiece);
 	
 	~Board();

@@ -1,17 +1,6 @@
 ﻿  AI_Lab3.cpp
 c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.h(22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(131): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(130): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Board.cpp
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.h(22): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(164): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(165): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(169): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(170): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(176): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(177): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(178): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.cpp(179): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Piece.cpp
-  Generating Code...
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\board.h(34): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleks\documents\visual studio 2017\projects\ai_lab3\ai_lab3\ai_lab3.cpp(67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   AI_Lab3.vcxproj -> C:\Users\aleks\Documents\Visual Studio 2017\Projects\AI_Lab3\x64\Debug\AI_Lab3.exe
