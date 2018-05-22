@@ -303,30 +303,12 @@ bool Board::isInCaptureChain(sf::Vector2f position, std::pair<int, std::string> 
 }
 
 
-//bool Board::isInPlayfield(std::string field)
-//{
-//	sf::Vector2f vectorPos = toCoord(field[0], field[1]);
-//	return (vectorPos.x >= m_offset.x && vectorPos.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
-//		&& vectorPos.y >= m_offset.y && vectorPos.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
-//}
 
 bool Board::isInPlayfield(sf::Vector2f position)
 {
 	return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
 		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
 }
-
-// returns index of piece found on field coordinates
-//int Board::getPieceIdxOnPosition(std::string field)
-//{
-//	sf::Vector2f vectorPos = toCoord(field[0], field[1]);
-//	for (int i = 0; i < m_pieces.size(); i++)
-//	{
-//		if (m_pieces[i].getPosition() == vectorPos)
-//			return i;
-//	}
-//	return -1;
-//}
 
 int Board::getPieceIdxOnPosition(sf::Vector2f position)
 {
@@ -352,7 +334,6 @@ bool Board::isCapturePossible(sf::Vector2f position, Piece &enemyPiece)
 {
 	
 	// get the position after jumping over enemy piece
-	//std::string newPos = toChessNote(enemyPiece.getPosition() + (enemyPiece.getPosition() - position));
 	sf::Vector2f newPos = enemyPiece.getPosition() + (enemyPiece.getPosition() - position);
 
 

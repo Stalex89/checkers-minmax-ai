@@ -77,6 +77,8 @@ public:
 	// Get all legal moves for piece
 	std::string getLegalMoves(Piece &piece, sf::Vector2f position);
 
+	int getXBound() { return m_sprite->getGlobalBounds().width; }
+	int getYBound() { return m_sprite->getGlobalBounds().height; }
 
 	void calculateAllMovesForColor(Piece::Color color);
 	void clearAllMovesForColor(Piece::Color color);
