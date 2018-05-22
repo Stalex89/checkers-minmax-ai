@@ -28,9 +28,8 @@ public:
 	Piece(Color color, sf::IntRect rect, sf::Vector2f position);
 
 	void move(sf::Vector2f newPos);
-	void attack(sf::Vector2f newPos, Piece &attackedPiece);
+	void capture(sf::Vector2f newPos, Piece &capturedPiece);
 	void promote();
-	void unpromote();
 
 	bool hasPossibleMoves() { return !m_possibleMoves.empty(); }
 	void addPossibleMove(std::pair<int, std::string> move) { m_possibleMoves.push_back(move); }
@@ -38,8 +37,8 @@ public:
 	void clearPossibleMoves() { m_possibleMoves.clear(); }
 
 	int getPossibleMoveIdx(std::string &move);
-
 	std::pair<int, std::string> getPossibleMove(int idx);
+	std::vector<std::pair<int, std::string>> getAllPossibleMoves() { return m_possibleMoves; }
 	sf::Sprite& getSprite() { return *m_sprite; }
 	int getSize() { return m_size; }
 	Color getColor() { return m_color; }

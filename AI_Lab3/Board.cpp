@@ -12,19 +12,29 @@ Board::Board()
 
 }
 
+Board::Board(Board &board)
+{
+	m_texture = new sf::Texture();
+	m_texture->loadFromFile("../images/board.png");
+	m_sprite = new sf::Sprite();
+	m_sprite->setTexture(*m_texture);
+	m_pieces = board.getPieces();
+	m_positions = board.getPositions();
+}
+
 void Board::loadPosition()
 {
-	//int board[8][8] =
-	//{
-	//	0, -1,  0, -1,  0, -1,  0, -1,
-	//	-1,  0, -1,  0, -1,  0, -1,  0,
-	//	0, -1,  0, -1,  0, -1,  0, -1,
-	//	0,  0,  0,  0,  0,  0,  0,  0,
-	//	0,  0,  0,  0,  0,  0,  0,  0,
-	//	1,  0,  1,  0,  1,  0,  1,  0,
-	//	0,  1,  0,  1,  0,  1,  0,  1,
-	//	1,  0,  1,  0,  1,  0,  1,  0,
-	//};
+	int board[8][8] =
+	{
+		0, -1,  0, -1,  0, -1,  0, -1,
+		-1,  0, -1,  0, -1,  0, -1,  0,
+		0, -1,  0, -1,  0, -1,  0, -1,
+		0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,
+		1,  0,  1,  0,  1,  0,  1,  0,
+		0,  1,  0,  1,  0,  1,  0,  1,
+		1,  0,  1,  0,  1,  0,  1,  0,
+	};
 
 	//int board[8][8] =
 	//{
@@ -38,17 +48,17 @@ void Board::loadPosition()
 	//	0, 0, 0, 0, 1, 0, 0, 0,
 	//};
 
-	int board[8][8] =
-	{
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 1, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, -1, 0, -1, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, -1, 0, -1, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-	};
+	//int board[8][8] =
+	//{
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 1, 0, 0, 0, 0, 0,
+	//	0, -1, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, -1, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//	0, 0, 0, -1, 0, -1, 0, 0,
+	//	0, 0, 0, 0, 0, 0, 0, 0,
+	//};
 
 	// clear pieces array
 	m_pieces.clear();
@@ -94,7 +104,7 @@ void Board::loadPosition()
 			else
 			{
 				sf::Vector2f attackPos = sf::Vector2f((newPos.x + oldPos.x) / 2, (newPos.y + oldPos.y) / 2);
-				m_pieces.at(getPieceIdxOnPosition(oldPos)).attack(newPos, m_pieces.at(getPieceIdxOnPosition(attackPos)));		
+				m_pieces.at(getPieceIdxOnPosition(oldPos)).capture(newPos, m_pieces.at(getPieceIdxOnPosition(attackPos)));		
 			}
 			
 		}
@@ -235,7 +245,7 @@ void Board::calculatePossibleMoves(Piece &piece)
 				if (m_pieces[k].getColor() != piece.getColor())// if it's opponents piece
 				{
 
-					if (isAttackPossible(piece.getPosition(), m_pieces[k])) // if we can attack enemy piece
+					if (isCapturePossible(piece.getPosition(), m_pieces[k])) // if we can attack enemy piece
 					{
 						
 						// get the position of piece after possible attack
@@ -243,7 +253,7 @@ void Board::calculatePossibleMoves(Piece &piece)
 
 						std::string move = toChessNote(piece.getPosition()) + toChessNote(position) + " ";
 						attackChain = std::make_pair(1, move); // create an attack chain
-						AttackRecursiveSearch(piece, position, attackChain); // call recursive search of attack chain
+						captureChainRecursiveSearch(piece, position, attackChain); // call recursive search of attack chain
 					}
 
 				}
@@ -252,7 +262,7 @@ void Board::calculatePossibleMoves(Piece &piece)
 	}
 }
 
-void Board::AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair<int, std::string> attackChain)
+void Board::captureChainRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair<int, std::string> attackChain)
 {
 	piece.addPossibleMove(attackChain); // add simple attack move
 
@@ -267,18 +277,18 @@ void Board::AttackRecursiveSearch(Piece &piece, sf::Vector2f position, std::pair
 			// if there is a piece found on that position and it is enemy piece
 			if (k != -1)
 				if(m_pieces[k].getColor() != piece.getColor())
-					if (isAttackPossible(position, m_pieces[k]) && !isInAttackChain(m_pieces[k].getPosition(), attackChain)) // if we can attack enemy piece
+					if (isCapturePossible(position, m_pieces[k]) && !isInCaptureChain(m_pieces[k].getPosition(), attackChain)) // if we can attack enemy piece
 					{						
 						// get new position of piece
 						sf::Vector2f newPosition = m_pieces[k].getPosition() + (m_pieces[k].getPosition() - position);
 						std::string move = toChessNote(position) + toChessNote(newPosition) + " ";
-						AttackRecursiveSearch(piece, newPosition, std::make_pair(attackChain.first + 1, attackChain.second + move)); // call recursive search of attack chain
+						captureChainRecursiveSearch(piece, newPosition, std::make_pair(attackChain.first + 1, attackChain.second + move)); // call recursive search of attack chain
 					}
 		}
 	}
 }
 
-bool Board::isInAttackChain(sf::Vector2f position, std::pair<int, std::string> attackChain)
+bool Board::isInCaptureChain(sf::Vector2f position, std::pair<int, std::string> attackChain)
 {
 	std::string chain = attackChain.second;
 	for (int i = 0; i < chain.length(); i += 5)
@@ -338,7 +348,7 @@ int Board::getPieceIdxBySprite(sf::Vector2i mousePos)
 	return -1;
 }
 
-bool Board::isAttackPossible(sf::Vector2f position, Piece &enemyPiece)
+bool Board::isCapturePossible(sf::Vector2f position, Piece &enemyPiece)
 {
 	
 	// get the position after jumping over enemy piece
@@ -385,4 +395,18 @@ bool Board::isGameOver(Piece::Color color)
 					return false;
 	}
 	return true;
+}
+
+void Board::calculateAllMovesForColor(Piece::Color color)
+{
+	for (int h = 0; h < m_pieces.size(); h++)
+		if (m_pieces.at(h).getColor() == color)
+			calculatePossibleMoves(m_pieces.at(h));
+}
+
+void Board::clearAllMovesForColor(Piece::Color color)
+{
+	for (int h = 0; h < m_pieces.size(); h++)
+		if (m_pieces.at(h).getColor() == color)
+			m_pieces.at(h).clearPossibleMoves();
 }
