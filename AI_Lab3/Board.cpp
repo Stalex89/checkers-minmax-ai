@@ -180,8 +180,10 @@ sf::Vector2f Board::toCoord(char a, char b)
 
 Board::~Board()
 {
-	delete m_sprite;
-	m_sprite = nullptr;
+	//delete m_sprite;
+	//m_sprite = nullptr;
+	//delete m_texture;
+	//m_texture = nullptr;
 }
 
 // Get all legal moves for string depending on color or king 

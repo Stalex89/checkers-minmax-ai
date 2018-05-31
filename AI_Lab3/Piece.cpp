@@ -71,4 +71,8 @@ std::pair<int, std::string> Piece::getPossibleMove(int idx)
 Piece::~Piece()
 {
 
+	//delete m_sprite;
+	//m_sprite = nullptr;
+	//delete m_texture;
+	//m_texture = nullptr;
 }
