@@ -161,17 +161,21 @@
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="BoardGUI.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Piece.h" />
+    <ClInclude Include="PieceGUI.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="BoardGUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Piece.cpp" />
+    <ClCompile Include="PieceGUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

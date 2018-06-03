@@ -15,8 +15,8 @@ public:
 
 private:
 	Color m_color;
-	sf::Texture *m_texture;
-	sf::Sprite *m_sprite;
+	//sf::Texture *m_texture;
+	//sf::Sprite *m_sprite;
 	int m_size = 56;
 	bool m_isKing = false;
 	sf::Vector2f m_position;
@@ -25,7 +25,8 @@ private:
 public:
 	
 	Piece();
-	Piece(Color color, sf::IntRect rect, sf::Vector2f position);
+	//Piece(Color color, sf::IntRect rect, sf::Vector2f position);
+	Piece(Color color, sf::Vector2f position);
 
 	void move(sf::Vector2f newPos);
 	void capture(sf::Vector2f newPos, Piece &capturedPiece);
@@ -39,7 +40,7 @@ public:
 	int getPossibleMoveIdx(std::string &move);
 	std::pair<int, std::string> getPossibleMove(int idx);
 	std::vector<std::pair<int, std::string>> getAllPossibleMoves() { return m_possibleMoves; }
-	sf::Sprite& getSprite() { return *m_sprite; }
+	//sf::Sprite& getSprite() { return *m_sprite; }
 	int getSize() { return m_size; }
 	Color getColor() { return m_color; }
 	bool isKing() { return m_isKing; }

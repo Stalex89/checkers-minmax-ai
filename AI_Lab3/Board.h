@@ -4,13 +4,15 @@
 
 class Board
 {
-	sf::Texture *m_texture;
-	sf::Sprite *m_sprite;
+	//sf::Texture *m_texture;
+	//sf::Sprite *m_sprite;
 
 	std::vector<std::pair<int, std::string>> m_positions;
 	std::vector<Piece> m_pieces;
 
 	int m_pieceSize = 56;
+	int m_width = 504;
+	int m_height = 504;
 	sf::Vector2f m_offset = sf::Vector2f(28,28);
 
 public:
@@ -27,7 +29,7 @@ public:
 	// Converts chess notation in two chars to Vector2f 
 	sf::Vector2f toCoord(char a, char b);
 
-	std::vector<Piece> getPieces() { return m_pieces; }
+	std::vector<Piece>& getPieces() { return m_pieces; }
 
 	// Returns the number of pieces instantiated 
 	int getPiecesNum() { return m_pieces.size(); }
@@ -39,7 +41,7 @@ public:
 	int getPieceIdxOnPosition(sf::Vector2f position);
 
 	// Finds the the piece by its coordinates on the board, returns the index of piece in the array
-	int getPieceIdxBySprite(sf::Vector2i mousePos);
+	//int getPieceIdxBySprite(sf::Vector2i mousePos);
 
 	// Appends move to the list of all performed moves
 	void addPosition(std::pair<int, std::string> position) { m_positions.push_back(position); }
@@ -50,7 +52,7 @@ public:
 	// Gets the number of all performed moves
 	int getPositionsSize() { return m_positions.size(); }
 
-	std::vector<std::pair<int, std::string>> getPositions() { return m_positions; }
+	std::vector<std::pair<int, std::string>>& getPositions() { return m_positions; }
 	void setPositions(std::vector<std::pair<int, std::string>> positions) { m_positions = positions; }
 	
 	// Prints all performed moves
@@ -77,13 +79,13 @@ public:
 	// Get all legal moves for piece
 	std::string getLegalMoves(Piece &piece, sf::Vector2f position);
 
-	int getXBound() { return m_sprite->getGlobalBounds().width; }
-	int getYBound() { return m_sprite->getGlobalBounds().height; }
+	//int getXBound() { return m_sprite->getGlobalBounds().width; }
+	//int getYBound() { return m_sprite->getGlobalBounds().height; }
 
 	void calculateAllMovesForColor(Piece::Color color);
 	void clearAllMovesForColor(Piece::Color color);
 
-	sf::Sprite& getSprite() { return *m_sprite; };
+	//sf::Sprite& getSprite() { return *m_sprite; };
 	int getPieceSize() { return m_pieceSize; }
 	sf::Vector2f getOffset() { return m_offset; }
 	

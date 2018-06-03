@@ -5,19 +5,19 @@
 
 Board::Board()
 {
-	m_texture = new sf::Texture();
-	m_texture->loadFromFile("../images/board.png");
-	m_sprite = new sf::Sprite();
-	m_sprite->setTexture(*m_texture);
-
+	//m_texture = new sf::Texture();
+	//m_texture->loadFromFile("../images/board.png");
+	//m_sprite = new sf::Sprite();
+	//m_sprite->setTexture(*m_texture);
+	m_pieces.reserve(24);
 }
 
 Board::Board(Board &board)
 {
-	m_texture = new sf::Texture();
-	m_texture->loadFromFile("../images/board.png");
-	m_sprite = new sf::Sprite();
-	m_sprite->setTexture(*m_texture);
+	//m_texture = new sf::Texture();
+	//m_texture->loadFromFile("../images/board.png");
+	//m_sprite = new sf::Sprite();
+	//m_sprite->setTexture(*m_texture);
 	m_pieces = board.getPieces();
 	m_positions = board.getPositions();
 }
@@ -79,7 +79,8 @@ void Board::loadPosition()
 			sf::Vector2f position = sf::Vector2f(float(m_pieceSize * j), float(m_pieceSize * i)) + m_offset;
 			//m_pieces.at(k) = Piece(color, rect, position);
 			//k++;
-			m_pieces.push_back(Piece(color, rect, position));
+			//m_pieces.push_back(Piece(color, rect, position));
+			m_pieces.emplace_back(color, position);
 		}
 
 
@@ -308,8 +309,10 @@ bool Board::isInCaptureChain(sf::Vector2f position, std::pair<int, std::string> 
 
 bool Board::isInPlayfield(sf::Vector2f position)
 {
-	return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
-		&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
+	//return (position.x >= m_offset.x && position.x <= m_sprite->getGlobalBounds().width - m_offset.x - m_pieceSize
+		//&& position.y >= m_offset.y && position.y <= m_sprite->getGlobalBounds().height - m_offset.y - m_pieceSize);
+	return (position.x >= m_offset.x && position.x <= m_width - m_offset.x - m_pieceSize
+		&& position.y >= m_offset.y && position.y <= m_height - m_offset.y - m_pieceSize);
 }
 
 int Board::getPieceIdxOnPosition(sf::Vector2f position)
@@ -322,15 +325,15 @@ int Board::getPieceIdxOnPosition(sf::Vector2f position)
 	return -1;
 }
 
-int Board::getPieceIdxBySprite(sf::Vector2i mousePos)
-{
-	for (int i = 0; i < m_pieces.size(); i++)
-	{
-		if (m_pieces.at(i).getSprite().getGlobalBounds().contains(float(mousePos.x), float(mousePos.y)))
-			return i;
-	}
-	return -1;
-}
+//int Board::getPieceIdxBySprite(sf::Vector2i mousePos)
+//{
+//	for (int i = 0; i < m_pieces.size(); i++)
+//	{
+//		if (m_pieces.at(i).getSprite().getGlobalBounds().contains(float(mousePos.x), float(mousePos.y)))
+//			return i;
+//	}
+//	return -1;
+//}
 
 bool Board::isCapturePossible(sf::Vector2f position, Piece &enemyPiece)
 {
