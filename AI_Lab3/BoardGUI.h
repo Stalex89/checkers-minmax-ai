@@ -21,8 +21,8 @@ public:
 
 	void loadPosition(std::vector<Piece> pieces);
 
-	int getXBound() { return m_sprite->getGlobalBounds().width; }
-	int getYBound() { return m_sprite->getGlobalBounds().height; }
+	int getXBound() { return (int)(m_sprite->getGlobalBounds().width); }
+	int getYBound() { return (int)(m_sprite->getGlobalBounds().height); }
 	PieceGUI& getPieceByIdx(int idx) { return m_pieces.at(idx); }
 	int getPieceIdxBySprite(sf::Vector2i mousePos);
 

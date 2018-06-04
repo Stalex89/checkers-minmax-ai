@@ -23,6 +23,7 @@ public:
 
 
 	std::pair<int, std::vector<std::pair<int, std::string>>> alphaBeta(Node *node, int depth, bool isPlayerMaximize);
+	//std::pair<int, std::pair<int, std::string>> alphaBeta(Node *node, int depth, bool isPlayerMaximize);
 
 	int evaluateBoard(Board &board, bool isPlayerMaximize, Piece::Color agentColor);
 

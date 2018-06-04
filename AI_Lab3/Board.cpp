@@ -38,6 +38,18 @@ void Board::loadPosition()
 
 	//int board[8][8] =
 	//{
+	//	0,  0,  0,  0,  0,  0,  0,  0,
+	//	0,  0,  0,  0,  0,  0,  0,  0,
+	//	0,  0,  0,  0,  0, -1,  0,  0,
+	//	0,  0,  0,  0,  0,  0,  0,  0,
+	//	0,  0,  0,  0,  0,  0,  0,  0,
+	//	0,  0,  0,  0,  0,  0,  0,  0,
+	//	0,  1,  0,  0,  0,  0,  0,  0,
+	//	0,  0,  0,  0,  0,  0,  0,  0,
+	//};
+
+	//int board[8][8] =
+	//{
 	//	0, 0, 0, 0, 0, 0, 0, 0,
 	//	0, 0, 0, 0, 0, 0, 0, 0,
 	//	0, 0, 0, 0, 0, 0, 0, 0,
@@ -195,22 +207,22 @@ std::string Board::getLegalMoves(Piece &piece, sf::Vector2f position)
 	{
 		if (piece.getColor() == Piece::Color::BLACK)
 		{
-			moves += toChessNote(position) + toChessNote(position + sf::Vector2f(-m_pieceSize, m_pieceSize)) + " ";
-			moves += toChessNote(position) + toChessNote(position + sf::Vector2f(m_pieceSize, m_pieceSize)) + " ";
+			moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(-m_pieceSize), (float)(m_pieceSize))) + " ";
+			moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(m_pieceSize), (float)(m_pieceSize))) + " ";
 		}
 		else // piece is White
 		{
-			moves += toChessNote(position) + toChessNote(position + sf::Vector2f(-m_pieceSize, -m_pieceSize)) + " ";
-			moves += toChessNote(position) + toChessNote(position + sf::Vector2f(m_pieceSize, -m_pieceSize)) + " ";
+			moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(-m_pieceSize), (float)(-m_pieceSize))) + " ";
+			moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(m_pieceSize), (float)(-m_pieceSize))) + " ";
 
 		}
 	}
 	else
 	{
-		moves += toChessNote(position) + toChessNote(position + sf::Vector2f(-m_pieceSize, m_pieceSize)) + " ";
-		moves += toChessNote(position) + toChessNote(position + sf::Vector2f(m_pieceSize, m_pieceSize)) + " ";
-		moves += toChessNote(position) + toChessNote(position + sf::Vector2f(-m_pieceSize, -m_pieceSize)) + " ";
-		moves += toChessNote(position) + toChessNote(position + sf::Vector2f(m_pieceSize, -m_pieceSize)) + " ";
+		moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(-m_pieceSize), (float)(m_pieceSize))) + " ";
+		moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(m_pieceSize), (float)(m_pieceSize))) + " ";
+		moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(-m_pieceSize), (float)(-m_pieceSize))) + " ";
+		moves += toChessNote(position) + toChessNote(position + sf::Vector2f((float)(m_pieceSize), (float)(-m_pieceSize))) + " ";
 	}
 
 	return moves;

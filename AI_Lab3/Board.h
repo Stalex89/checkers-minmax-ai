@@ -32,7 +32,7 @@ public:
 	std::vector<Piece>& getPieces() { return m_pieces; }
 
 	// Returns the number of pieces instantiated 
-	int getPiecesNum() { return m_pieces.size(); }
+	int getPiecesNum() { return (int)(m_pieces.size()); }
 
 	// Finds the piece in the array of pieces by index, returns reference to the piece
 	Piece& getPieceByIdx(int idx) { return m_pieces.at(idx); }
@@ -50,7 +50,7 @@ public:
 	void deleteLastPosition() { m_positions.pop_back(); }
 
 	// Gets the number of all performed moves
-	int getPositionsSize() { return m_positions.size(); }
+	int getPositionsSize() { return (int)(m_positions.size()); }
 
 	std::vector<std::pair<int, std::string>>& getPositions() { return m_positions; }
 	void setPositions(std::vector<std::pair<int, std::string>> positions) { m_positions = positions; }

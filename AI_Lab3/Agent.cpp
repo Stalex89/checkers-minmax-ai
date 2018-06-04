@@ -19,6 +19,7 @@ Agent::~Agent()
 
 
 std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *node, int depth, bool isPlayerMaximize)
+//std::pair<int, std::pair<int, std::string>> Agent::alphaBeta(Node *node, int depth, bool isPlayerMaximize)
 {
 	Piece::Color currColor; 
 
@@ -57,7 +58,7 @@ std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *
 //		return pair;
 //	}
 //	// traverse through all pieces on the board
-//	for (int idx = 0; idx < node->getNodeBoard().getPieceSize(); idx++)
+//	for (int idx = 0; idx < node->getNodeBoard().getPiecesNum(); idx++)
 //	{
 //		Piece p = node->getNodeBoard().getPieceByIdx(idx);
 //		
@@ -135,13 +136,16 @@ std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *
 	// terminal condition
 	if (depth == 0 || node->getNodeBoard().isGameOver(currColor))
 	{
-		std::vector<std::pair<int, std::string>> po = node->getNodeBoard().getPositions();
+		//std::vector<std::pair<int, std::string>> po = node->getNodeBoard().getPositions();
+		std::vector<std::pair<int, std::string>> po = node->getMoves();
+		//std::pair<int, std::string> po = node->getNodeBoard().getPositions().front();
 		int eb = evaluateBoard(node->getNodeBoard(), isPlayerMaximize, m_agentColor);
 		std::pair<int, std::vector<std::pair<int, std::string>>> pair = std::make_pair(eb, po);
+		//std::pair<int, std::pair<int, std::string>> pair = std::make_pair(eb, po);
 		return pair;
 	}
 	// traverse through all pieces on the board
-	for (int idx = 0; idx < node->getNodeBoard().getPieceSize(); idx++)
+	for (int idx = 0; idx < node->getNodeBoard().getPiecesNum(); idx++)
 	{
 		Piece p = node->getNodeBoard().getPieceByIdx(idx);
 
@@ -157,9 +161,13 @@ std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *
 				//update the positions of the child node with new move and update the state of the board
 				std::vector<std::pair<int, std::string>> pos = node->getNodeBoard().getPositions();
 				pos.push_back(move);
+
+				child->setMoves(node->getMoves());
+				child->addMove(move);
 				child->getNodeBoard().setPositions(pos);
 
 				std::pair<int, std::vector<std::pair<int, std::string>>> val = alphaBeta(child, depth - 1, false);
+				//std::pair<int, std::pair<int, std::string>> val = alphaBeta(child, depth - 1, false);
 
 				// delete child after evaluation of child node
 				delete child;
@@ -175,7 +183,7 @@ std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *
 
 			}
 
-			return node->getAlphaPos();
+			//return node->getAlphaPos();
 		}
 
 		else if (!isPlayerMaximize && p.getColor() != m_agentColor && p.hasPossibleMoves())
@@ -189,9 +197,13 @@ std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *
 				//update the positions of the child node with new move and update the state of the board
 				std::vector<std::pair<int, std::string>> pos = node->getNodeBoard().getPositions();
 				pos.push_back(move);
+
+				child->setMoves(node->getMoves());
+				child->addMove(move);
 				child->getNodeBoard().setPositions(pos);
 
 				std::pair<int, std::vector<std::pair<int, std::string>>> val = alphaBeta(child, depth - 1, true);
+				//std::pair<int, std::pair<int, std::string>> val = alphaBeta(child, depth - 1, true);
 
 				// delete child after evaluation of child node
 				delete child;
@@ -207,12 +219,17 @@ std::pair<int, std::vector<std::pair<int, std::string>>> Agent::alphaBeta(Node *
 
 			}
 
-			return node->getBetaPos();
+			//return node->getBetaPos();
 
 		}
 
 
 	}
+
+	if (isPlayerMaximize)
+		return node->getAlphaPos();
+	else
+		return node->getBetaPos();
 
 }
 

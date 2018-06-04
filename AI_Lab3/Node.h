@@ -10,9 +10,12 @@ class Node
 	// for preserving the state of the board
 	Board *m_board;
 
+	std::vector<std::pair<int, std::string>> m_moves;
 	// alpha and beta 
 	std::pair<int, std::vector<std::pair<int, std::string>>> m_alphaPos;
+	//std::pair<int, std::pair<int, std::string>> m_alphaPos;
 	std::pair<int, std::vector<std::pair<int, std::string>>> m_betaPos;
+	//std::pair<int, std::pair<int, std::string>> m_betaPos;
 
 
 public:
@@ -26,9 +29,25 @@ public:
 	}
 
 	std::pair<int, std::vector<std::pair<int, std::string>>> getAlphaPos() { return m_alphaPos; }
+	
+	//std::pair<int, std::pair<int, std::string>> getAlphaPos() { return m_alphaPos; }
+	
 	std::pair<int, std::vector<std::pair<int, std::string>>> getBetaPos() { return m_betaPos; }
+	
+	//std::pair<int, std::pair<int, std::string>> getBetaPos() { return m_betaPos; }
+	
 	void setAlphaPos(const std::pair<int, std::vector<std::pair<int, std::string>>> alphaPos) { m_alphaPos = alphaPos; }
+	
+	//void setAlphaPos(const std::pair<int, std::pair<int, std::string>> alphaPos) { m_alphaPos = alphaPos; }
+	
 	void setBetaPos(const std::pair<int, std::vector<std::pair<int, std::string>>> betaPos) { m_betaPos = betaPos; }
+	
+	//void setBetaPos(const std::pair<int, std::pair<int, std::string>> betaPos) { m_betaPos = betaPos; }
+
+	void addMove(std::pair<int, std::string> move) { m_moves.push_back(move); }
+
+	std::vector<std::pair<int, std::string>> getMoves() { return m_moves; }
+	void setMoves(std::vector<std::pair<int, std::string>> moves) { m_moves = moves; }
 
 	~Node();
 };
